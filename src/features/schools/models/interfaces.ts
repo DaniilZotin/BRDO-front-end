@@ -1,9 +1,13 @@
 import type { CreateSchoolDto } from '../types'
-import {type GridPaginationModel } from '@mui/x-data-grid'
+import { type GridPaginationModel } from '@mui/x-data-grid'
 
-export const SCHOOL_TYPES = ['ЛІЦЕЙ', 'ГІМНАЗІЯ', 'ЗЗСО'] as const
+export const SCHOOL_TYPES = [
+	{ label: 'ЛІЦЕЙ', value: 'LYCEUM' },
+	{ label: 'ГІМНАЗІЯ', value: 'GYMNASIUM' },
+	{ label: 'ЗЗСО', value: 'ZZSO' },
+] as const
 
-export type SchoolType = (typeof SCHOOL_TYPES)[number]
+export type SchoolType = (typeof SCHOOL_TYPES)[number]['value']
 
 export interface Filters {
 	region: string

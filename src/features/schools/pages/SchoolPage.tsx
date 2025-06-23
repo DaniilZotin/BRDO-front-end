@@ -12,9 +12,9 @@ import {
 } from '@mui/material'
 import SchoolTable from '../components/SchoolTable'
 import SchoolForm from '../components/SchoolForm'
-import {type GridPaginationModel } from '@mui/x-data-grid'
+import { type GridPaginationModel } from '@mui/x-data-grid'
 import type { CreateSchoolDto } from '../types'
-import {useCallback, useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import type { Filters, SchoolDto } from '../models/interfaces'
 import { IconButton, Tooltip } from '@mui/material'
 import { useColorMode } from '@/theme/useColorMode'
@@ -22,29 +22,33 @@ import LightModeIcon from '@mui/icons-material/LightModeOutlined'
 import DarkModeIcon from '@mui/icons-material/DarkModeOutlined'
 import SchoolFilters from '../components/SchoolFilters'
 import { fetchSchools, createSchool, deactivateSchool } from '../api/schoolApi'
+import { Alert } from '@mui/material'
+import axios from 'axios'
 
 export default function SchoolsPage() {
-    const { mode, toggle } = useColorMode()
+	const { mode, toggle } = useColorMode()
 	const [schools, setSchools] = useState<SchoolDto[]>([])
 	const [rowCount, setRowCount] = useState(0)
 	const [loading, setLoading] = useState(false)
 	const [pendingId, setPendingId] = useState<string>()
 	const [toast, setToast] = useState<string>()
+	const [snack, setSnack] = useState<string | null>(null)
+
+	const handleClose = () => setSnack(null)
 
 	const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
 		page: 0,
 		pageSize: 10,
 	})
 
-    const defaultFilters: Filters = { region: '', type: '', isActive: '' }
-		const [filters, setFilters] = useState<Filters>(defaultFilters)
+	const defaultFilters: Filters = { region: '', type: '', isActive: '' }
+	const [filters, setFilters] = useState<Filters>(defaultFilters)
 
 	const loadSchools = useCallback(async () => {
 		const { page, pageSize } = paginationModel
 		const { region } = filters
 
 		if (region.trim() !== '' && region.trim().length < 4) return
-        
 
 		setLoading(true)
 		try {
@@ -61,9 +65,20 @@ export default function SchoolsPage() {
 	}, [loadSchools])
 
 	const handleCreate = async (dto: CreateSchoolDto) => {
-		await createSchool(dto)
-		setToast('School created')
-		loadSchools()
+		try {
+			await createSchool(dto)
+
+			setToast('School created')
+			loadSchools()
+		} catch (err) {
+			if (axios.isAxiosError(err)) {
+				if (err.response?.status === 409) {
+					setToast('Школа з таким ЄДРПОУ вже існує')
+				} else {
+					setToast('Помилка при створенні школи')
+				}
+			}
+		}
 	}
 
 	useEffect(() => {
@@ -77,7 +92,7 @@ export default function SchoolsPage() {
 		)
 
 		try {
-			await deactivateSchool(pendingId);
+			await deactivateSchool(pendingId)
 			setToast('School deactivated')
 		} catch (e) {
 			console.log('Error from back-end is ', e)
@@ -106,7 +121,9 @@ export default function SchoolsPage() {
 				Школи
 			</Typography>
 
-			<Box mb={3}>
+			<Box
+				mb={2}
+			>
 				<SchoolForm onSubmit={handleCreate} />
 			</Box>
 
@@ -162,6 +179,16 @@ export default function SchoolsPage() {
 				onClose={() => setToast(undefined)}
 				message={toast}
 			/>
+
+			<Snackbar
+				open={!!snack}
+				autoHideDuration={6000}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+			>
+				<Alert severity='error' onClose={handleClose} variant='filled'>
+					{snack}
+				</Alert>
+			</Snackbar>
 		</Container>
 	)
 }

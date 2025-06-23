@@ -1,14 +1,13 @@
-// src/theme/getTheme.ts
 import { createTheme } from '@mui/material/styles'
 import { blue, grey, amber, green } from '@mui/material/colors'
-import '@mui/x-data-grid/themeAugmentation';
+import '@mui/x-data-grid/themeAugmentation'
 
 export type Mode = 'light' | 'dark'
 
 export default function getTheme(mode: Mode) {
-  const isDark = mode === 'dark'
+	const isDark = mode === 'dark'
 
-  return createTheme({
+	return createTheme({
 		palette: {
 			mode,
 			primary: { main: blue[600] },

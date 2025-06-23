@@ -1,6 +1,6 @@
 import { api } from '@/api/axios'
 
-import type { CreateSchoolDto} from '../types'
+import type { CreateSchoolDto } from '../types'
 import type { Filters, SchoolDto } from '../models/interfaces'
 
 export interface SchoolsPageResponse {

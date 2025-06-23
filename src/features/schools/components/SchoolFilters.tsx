@@ -50,9 +50,9 @@ export default function SchoolFilters({ value, onChange, onClear }: Props) {
 				<InputLabel>Тип</InputLabel>
 				<Select label='Type' value={value.type} onChange={handleSelect('type')}>
 					<MenuItem value=''>Всі</MenuItem>
-					{SCHOOL_TYPES.map(t => (
-						<MenuItem key={t} value={t}>
-							{t}
+					{SCHOOL_TYPES.map(opt => (
+						<MenuItem key={opt.value} value={opt.value}>
+							{opt.label} 
 						</MenuItem>
 					))}
 				</Select>

@@ -1,6 +1,4 @@
-import {
-	DataGrid
-} from '@mui/x-data-grid'
+import { DataGrid } from '@mui/x-data-grid'
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { IconButton, Tooltip } from '@mui/material'
 import BlockIcon from '@mui/icons-material/Block'
@@ -8,16 +6,15 @@ import SchoolIcon from '@mui/icons-material/SchoolRounded'
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjectsRounded'
 import LocalLibraryIcon from '@mui/icons-material/LocalLibraryRounded'
 import { blue, green, amber } from '@mui/material/colors'
-import type { SchoolTableProps, SchoolDto } from '../models/interfaces' 
-
+import type { SchoolTableProps, SchoolDto } from '../models/interfaces'
 
 const typeIcon = {
 	LYCEUM: <SchoolIcon sx={{ color: blue[500] }} />,
-    'ЛІЦЕЙ': <SchoolIcon sx={{ color: blue[500] }} />,
+	ЛІЦЕЙ: <SchoolIcon sx={{ color: blue[500] }} />,
 	GYMNASIUM: <EmojiObjectsIcon sx={{ color: green[500] }} />,
-    'ГІМНАЗІЯ': <EmojiObjectsIcon sx={{ color: green[500] }} />,
+	ГІМНАЗІЯ: <EmojiObjectsIcon sx={{ color: green[500] }} />,
 	ZZSO: <LocalLibraryIcon sx={{ color: amber[800] }} />,
-	'ЗЗСО': <LocalLibraryIcon sx={{ color: amber[800] }} />,
+	ЗЗСО: <LocalLibraryIcon sx={{ color: amber[800] }} />,
 }
 
 export default function SchoolTable({
@@ -28,8 +25,6 @@ export default function SchoolTable({
 	onPaginationModelChange,
 	onDeactivate,
 }: SchoolTableProps) {
-
-
 	const columns: GridColDef<SchoolDto>[] = [
 		{
 			field: 'icon',
@@ -85,6 +80,7 @@ export default function SchoolTable({
 				width: '100%',
 				'& .active-yes': { color: green[600], fontWeight: 600 },
 				'& .active-no': { color: amber[800], fontWeight: 600 },
+				minHeight: '300px'
 			}}
 		/>
 	)

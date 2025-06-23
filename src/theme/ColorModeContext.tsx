@@ -1,5 +1,4 @@
-// src/theme/ColorModeContext.tsx
-import React, {useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import getTheme, { type Mode } from './getTheme'
 import { ColorModeCtx } from './ColorModeCtx'
@@ -8,7 +7,6 @@ interface Ctx {
 	mode: Mode
 	toggle: () => void
 }
-
 
 export const ColorModeProvider: React.FC<React.PropsWithChildren> = ({
 	children,

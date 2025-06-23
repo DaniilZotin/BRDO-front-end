@@ -14,7 +14,6 @@ import {
 import type { SchoolFormProps } from '../models/interfaces'
 import { SCHOOL_TYPES } from '../models/interfaces'
 
-
 export default function SchoolForm({ onSubmit }: SchoolFormProps) {
 	const {
 		register,
@@ -85,11 +84,11 @@ export default function SchoolForm({ onSubmit }: SchoolFormProps) {
 						error={!!errors.type}
 						helperText={errors.type?.message}
 					>
-						{SCHOOL_TYPES.map(t => (
-                                                <MenuItem key={t} value={t}>
-                                                    {t}
-                                                </MenuItem>
-                                            ))}
+						{SCHOOL_TYPES.map(({ value, label }) => (
+							<MenuItem key={value} value={value}>
+								{label}
+							</MenuItem>
+						))}
 					</TextField>
 				</Stack>
 
